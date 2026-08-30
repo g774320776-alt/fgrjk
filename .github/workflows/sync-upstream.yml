@@ -1,1 +1,28 @@
+name: 自动同步上游仓库
+on:
+  # 北京时间 每日早上04:00执行
+  schedule:
+    - cron: '0 20 * * *'
+  # 支持手动点击工作流运行
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    name: 同步上游main分支
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 同步上游FGBLH/fgrjk main分支
+        uses: aormsby/fork-sync-with-upstream-action@v3.4.1
+        with:
+          upstream_repo: FGBLH/fgrjk
+          upstream_branch: main
+          target_branch: main
+          sync_mode: reset
+          target_repo_token: ${{ secrets.SYNC_TOKEN }}
+          test_mode: false
 
