@@ -1,6 +1,7 @@
 name: 自动同步上游仓库
 on:
   schedule:
+    # UTC20点 = 北京时间04:00
     - cron: '0 20 * * *'
   workflow_dispatch:
 
@@ -17,10 +18,9 @@ jobs:
       - name: 同步上游FGBLH/fgrjk main分支
         uses: aormsby/fork-sync-with-upstream-action@v3.4.1
         with:
-          upstream_repo: FGBLH/fgrjk
-          # ✅修复这里！正确参数名 upstream_sync_branch，不是 upstream_branch
+          upstream_sync_repo: FGBLH/fgrjk
           upstream_sync_branch: main
-          target_branch: main
+          target_sync_branch: main
           sync_mode: reset
           target_repo_token: ${{ secrets.SYNC_TOKEN }}
           test_mode: false
