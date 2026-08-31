@@ -2,7 +2,7 @@ name: 自动同步上游仓库
 
 on:
   schedule:
-    # 每天北京时间 04:00
+    # 每天北京时间 04:00（UTC 20:00）
     - cron: '0 20 * * *'
   workflow_dispatch:
 
@@ -15,12 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 检出仓库代码
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.SYNC_TOKEN }}
-
       - name: 同步上游 FGBLH/fgrjk
         uses: aormsby/fork-sync-with-upstream-action@v3.4.1
         with:
